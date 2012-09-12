@@ -66,6 +66,8 @@ LOCAL_SRC_FILES := $(LOCAL_SRC_FILES) \
     glslang_lex.cpp \
     glslang_tab.cpp
 
+LOCAL_CFLAGS += -fno-strict-aliasing
+
 # Preprocessor
 LOCAL_SRC_FILES := $(LOCAL_SRC_FILES) \
     preprocessor/atom.c \
