@@ -288,10 +288,13 @@ ifeq ($(ENABLE_WTF_USE_ACCELERATED_COMPOSITING),true)
 LOCAL_CFLAGS += -DWTF_USE_ACCELERATED_COMPOSITING=1
 endif
 
-ifeq ($(call is-chipset-prefix-in-board-platform,msm7627),true)
+ifeq ($(call is-board-platform,msm7x27),true)
   LOCAL_CFLAGS += -DVIDEO_PLATFORM_ID=2
 else
-  ifeq ($(call is-chipset-in-board-platform,msm7630),true)
+  ifeq ($(call is-board-platform,msm7x27a),true)
+    LOCAL_CFLAGS += -DVIDEO_PLATFORM_ID=2
+  else
+  ifeq ($(call is-board-platform,msm7x30),true)
     LOCAL_CFLAGS += -DVIDEO_PLATFORM_ID=3
   else
     ifeq ($(call is-board-platform,msm8660),true)
@@ -307,6 +310,7 @@ else
         endif
       endif
     endif
+  endif
   endif
 endif
 
@@ -369,7 +373,15 @@ LOCAL_CFLAGS += -DSUPPORT_COMPLEX_SCRIPTS=1
 endif
 
 # Build the list of static libraries
-LOCAL_STATIC_LIBRARIES := libxml2 libxslt libhyphenation libskiagpu libv8
+LOCAL_STATIC_LIBRARIES := libxml2 libxslt libhyphenation libskiagpu
+
+ifeq ($(DYNAMIC_SHARED_LIBV8SO),true)
+LOCAL_SHARED_LIBRARIES += libv8
+$(shell mkdir -p $(OUT)/obj/SHARED_LIBRARIES/libv8_intermediates)
+$(shell touch $(OUT)/obj/SHARED_LIBRARIES/libv8_intermediates/export_includes)
+else
+LOCAL_STATIC_LIBRARIES += libv8
+endif
 
 ifeq ($(ENABLE_WEBGL),true)
 LOCAL_STATIC_LIBRARIES += libpng
