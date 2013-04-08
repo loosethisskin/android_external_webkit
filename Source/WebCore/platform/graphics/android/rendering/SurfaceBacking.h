@@ -29,10 +29,6 @@
 #include "SkRefCnt.h"
 #include "TileGrid.h"
 
-#if __cplusplus < 201103L && !defined(__GXX_EXPERIMENTAL_CXX0X__) && !defined(char16_t)
-#define constexpr const
-#endif
-
 namespace WebCore {
 
 class LayerAndroid;
@@ -89,7 +85,7 @@ private:
     void swapTileGrids();
 
     // Delay before we schedule a new tile at the new scale factor
-    static constexpr double s_zoomUpdateDelay = 0.1; // 100 ms
+    static const double s_zoomUpdateDelay = 0.1; // 100 ms
 
     TileGrid* m_frontTileGrid;
     TileGrid* m_backTileGrid;
